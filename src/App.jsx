@@ -93,16 +93,16 @@ export default function App() {
       <CustomCursor />
       <ParticleCanvas />
 
-      {/* Subtle radial glow in background */}
+      {/* Background glow orbs */}
       <div
         aria-hidden="true"
         style={{
           position: 'fixed',
-          top: '-20%',
-          left: '-10%',
-          width: '60vw',
-          height: '60vw',
-          background: 'radial-gradient(circle, #00d4aa08 0%, transparent 70%)',
+          top: '-15%',
+          left: '-5%',
+          width: '55vw',
+          height: '55vw',
+          background: 'radial-gradient(circle, #00d4aa0b 0%, transparent 65%)',
           pointerEvents: 'none',
           zIndex: 0,
         }}
@@ -111,11 +111,25 @@ export default function App() {
         aria-hidden="true"
         style={{
           position: 'fixed',
-          bottom: '-20%',
-          right: '-10%',
+          bottom: '-15%',
+          right: '-5%',
           width: '50vw',
           height: '50vw',
-          background: 'radial-gradient(circle, #7c3aed08 0%, transparent 70%)',
+          background: 'radial-gradient(circle, #7c3aed0a 0%, transparent 65%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: '40%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '40vw',
+          height: '40vw',
+          background: 'radial-gradient(circle, #00d4aa04 0%, transparent 70%)',
           pointerEvents: 'none',
           zIndex: 0,
         }}
