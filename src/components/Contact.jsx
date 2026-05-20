@@ -289,6 +289,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
+                className="contact-submit"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',

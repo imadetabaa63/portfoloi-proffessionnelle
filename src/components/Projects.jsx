@@ -1,9 +1,14 @@
-import { Github, ExternalLink, Tag } from 'lucide-react'
+import { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { Github, ExternalLink, Eye } from 'lucide-react'
 import ScrollReveal from './ScrollReveal'
+import ProjectModal from './ProjectModal'
 import { projects } from '../data/portfolio'
 
 // ── Single project card ────────────────────────────────────────────────────────
-function ProjectCard({ project, delay }) {
+function ProjectCard({ project, delay, onPreview }) {
+  const hasImages = project.images?.length > 0
+
   return (
     <ScrollReveal delay={delay}>
       <article
@@ -11,10 +16,91 @@ function ProjectCard({ project, delay }) {
         style={{ '--card-accent': project.accent, height: '100%', display: 'flex', flexDirection: 'column' }}
         aria-label={`Projet : ${project.title}`}
       >
-        {/* Top accent line handled by CSS ::before */}
+        {/* ── Screenshot preview thumbnail ── */}
+        {hasImages && (
+          <div
+            onClick={onPreview}
+            style={{
+              position: 'relative',
+              height: '180px',
+              overflow: 'hidden',
+              cursor: 'pointer',
+              flexShrink: 0,
+              borderBottom: `1px solid ${project.accent}22`,
+            }}
+          >
+            <img
+              src={project.images[0].src}
+              alt={`Aperçu — ${project.title}`}
+              loading="lazy"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'top',
+                display: 'block',
+                transition: 'transform 0.4s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
+              onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+            />
+            {/* Image count badge */}
+            {project.images.length > 1 && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '10px',
+                  right: '10px',
+                  fontFamily: '"Space Mono", monospace',
+                  fontSize: '0.65rem',
+                  color: '#e2e8f0',
+                  background: 'rgba(8,12,20,0.82)',
+                  border: '1px solid #1e2d42',
+                  borderRadius: '4px',
+                  padding: '2px 8px',
+                  backdropFilter: 'blur(4px)',
+                }}
+              >
+                +{project.images.length - 1} photos
+              </span>
+            )}
+            {/* Hover overlay */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: `linear-gradient(to bottom, transparent 40%, ${project.accent}22)`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                opacity: 0,
+                transition: 'opacity 0.25s ease',
+              }}
+              className="card-img-overlay"
+            >
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 18px',
+                  background: 'rgba(8,12,20,0.88)',
+                  border: `1px solid ${project.accent}66`,
+                  borderRadius: '6px',
+                  color: project.accent,
+                  fontFamily: '"Syne", sans-serif',
+                  fontWeight: 700,
+                  fontSize: '0.8rem',
+                }}
+              >
+                <Eye size={14} /> Voir galerie
+              </span>
+            </div>
+          </div>
+        )}
 
-        <div style={{ padding: '28px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {/* Category + links */}
+        <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+          {/* Category + icon links */}
           <div
             style={{
               display: 'flex',
@@ -46,12 +132,7 @@ function ProjectCard({ project, delay }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`GitHub — ${project.title}`}
-                  style={{
-                    color: '#8892a4',
-                    transition: 'color 0.2s',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
+                  style={{ color: '#8892a4', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }}
                   onMouseEnter={e => (e.currentTarget.style.color = project.accent)}
                   onMouseLeave={e => (e.currentTarget.style.color = '#8892a4')}
                 >
@@ -64,12 +145,7 @@ function ProjectCard({ project, delay }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Live — ${project.title}`}
-                  style={{
-                    color: '#8892a4',
-                    transition: 'color 0.2s',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
+                  style={{ color: '#8892a4', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }}
                   onMouseEnter={e => (e.currentTarget.style.color = project.accent)}
                   onMouseLeave={e => (e.currentTarget.style.color = '#8892a4')}
                 >
@@ -116,14 +192,7 @@ function ProjectCard({ project, delay }) {
           </p>
 
           {/* Highlights */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '6px',
-              marginBottom: '20px',
-            }}
-          >
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
             {project.highlights.map(h => (
               <span
                 key={h}
@@ -149,9 +218,7 @@ function ProjectCard({ project, delay }) {
           {/* Stack badges */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: 'auto' }}>
             {project.stack.map(tech => (
-              <span key={tech} className="badge">
-                {tech}
-              </span>
+              <span key={tech} className="badge">{tech}</span>
             ))}
           </div>
         </div>
@@ -162,6 +229,8 @@ function ProjectCard({ project, delay }) {
 
 // ── Section ────────────────────────────────────────────────────────────────────
 export default function Projects() {
+  const [activeProject, setActiveProject] = useState(null)
+
   return (
     <section
       id="projects"
@@ -186,7 +255,7 @@ export default function Projects() {
             }}
           >
             Projets réels combinant IA, automatisation et développement web moderne.
-            Chaque projet résout un problème concret.
+            Cliquez sur <span style={{ color: '#e2e8f0' }}>Voir Projet</span> pour explorer les captures d'écran.
           </p>
         </ScrollReveal>
 
@@ -199,10 +268,25 @@ export default function Projects() {
           }}
         >
           {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} delay={i * 0.08} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              delay={i * 0.08}
+              onPreview={() => setActiveProject(project)}
+            />
           ))}
         </div>
       </div>
+
+      {/* Lightbox modal */}
+      <AnimatePresence>
+        {activeProject && (
+          <ProjectModal
+            project={activeProject}
+            onClose={() => setActiveProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   )
 }

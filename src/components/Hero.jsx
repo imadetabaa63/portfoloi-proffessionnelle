@@ -124,171 +124,146 @@ export default function Hero() {
       }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
-        {/* Two-column layout on large screens */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(0,1fr) auto',
-            gap: '60px',
-            alignItems: 'center',
-          }}
-          className="hero-grid"
-        >
-          {/* ── Left column ── */}
-          <div>
-            {/* Available badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55 }}
-              style={{ marginBottom: '20px' }}
-            >
-              <span
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  fontFamily: '"Space Mono", monospace',
-                  fontSize: '0.72rem',
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: '#00d4aa',
-                  background: '#00d4aa0d',
-                  border: '1px solid #00d4aa33',
-                  borderRadius: '100px',
-                  padding: '5px 14px',
-                }}
-              >
-                <span
-                  style={{
-                    width: '7px',
-                    height: '7px',
-                    borderRadius: '50%',
-                    background: '#00d4aa',
-                    boxShadow: '0 0 8px #00d4aa',
-                    animation: 'pulse-glow 2s ease-in-out infinite',
-                    flexShrink: 0,
-                  }}
-                />
-                Disponible — Open to work
-              </span>
-            </motion.div>
+        {/* Centered single column */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
 
-            {/* Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              style={{
-                fontFamily: '"Syne", sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(2.6rem, 6vw, 4.2rem)',
-                lineHeight: 1.05,
-                margin: '0 0 6px 0',
-              }}
-            >
-              {personal.firstName}&nbsp;
-              <span className="text-gradient-cyan">{personal.lastName}</span>
-            </motion.h1>
-
-            {/* Typed role */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              style={{
-                height: '44px',
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: '28px',
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: '"Space Mono", monospace',
-                  fontSize: 'clamp(0.95rem, 2.2vw, 1.2rem)',
-                  color: '#8892a4',
-                }}
-              >
-                {typedText}
-                <span className="cursor-blink" />
-              </span>
-            </motion.div>
-
-            {/* Tagline */}
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              style={{
-                color: '#8892a4',
-                maxWidth: '520px',
-                lineHeight: 1.75,
-                marginBottom: '44px',
-                fontSize: '1rem',
-              }}
-            >
-              Je construis des applications intelligentes — reconnaissance faciale,
-              agents IA, APIs haute performance et automatisation de workflows.
-              Basé à{' '}
-              <span style={{ color: '#e2e8f0' }}>Casablanca, Maroc</span>.
-            </motion.p>
-
-            {/* CTA buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
-              style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}
-            >
-              <button
-                onClick={() => scrollTo('projects')}
-                className="btn-primary"
-                aria-label="Voir les projets"
-              >
-                <Eye size={16} />
-                Voir Projets
-              </button>
-
-              <a
-                href={personal.cv}
-                download
-                className="btn-outline"
-                aria-label="Télécharger mon CV"
-              >
-                <Download size={16} />
-                Télécharger CV
-              </a>
-
-              <a
-                href={personal.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline"
-                aria-label="Voir mon GitHub"
-              >
-                <Github size={16} />
-                GitHub ↗
-              </a>
-            </motion.div>
-          </div>
-
-          {/* ── Right column — terminal (desktop only) ── */}
+          {/* Available badge */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="hidden lg:block"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            style={{ marginBottom: '20px' }}
           >
-            <TerminalWindow />
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontFamily: '"Space Mono", monospace',
+                fontSize: '0.72rem',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#00d4aa',
+                background: '#00d4aa0d',
+                border: '1px solid #00d4aa33',
+                borderRadius: '100px',
+                padding: '5px 14px',
+              }}
+            >
+              <span
+                style={{
+                  width: '7px',
+                  height: '7px',
+                  borderRadius: '50%',
+                  background: '#00d4aa',
+                  boxShadow: '0 0 8px #00d4aa',
+                  animation: 'pulse-glow 2s ease-in-out infinite',
+                  flexShrink: 0,
+                }}
+              />
+              Disponible — Open to work
+            </span>
+          </motion.div>
+
+          {/* Name */}
+          <motion.h1
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            style={{
+              fontFamily: '"Syne", sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(2.6rem, 6vw, 4.2rem)',
+              lineHeight: 1.05,
+              margin: '0 0 6px 0',
+            }}
+          >
+            {personal.firstName}&nbsp;
+            <span className="text-gradient-cyan">{personal.lastName}</span>
+          </motion.h1>
+
+          {/* Typed role */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            style={{
+              height: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '28px',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: '"Space Mono", monospace',
+                fontSize: 'clamp(0.95rem, 2.2vw, 1.2rem)',
+                color: '#8892a4',
+              }}
+            >
+              {typedText}
+              <span className="cursor-blink" />
+            </span>
+          </motion.div>
+
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            style={{
+              color: '#8892a4',
+              maxWidth: '560px',
+              lineHeight: 1.75,
+              marginBottom: '44px',
+              fontSize: '1rem',
+            }}
+          >
+            Je construis des applications intelligentes — reconnaissance faciale,
+            agents IA, APIs haute performance et automatisation de workflows.
+            Basé à{' '}
+            <span style={{ color: '#e2e8f0' }}>Casablanca, Maroc</span>.
+          </motion.p>
+
+          {/* CTA buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}
+          >
+            <button
+              onClick={() => scrollTo('projects')}
+              className="btn-primary"
+              aria-label="Voir les projets"
+            >
+              <Eye size={16} />
+              Voir Projets
+            </button>
+
+            <a
+              href={personal.cv}
+              download
+              className="btn-outline"
+              aria-label="Télécharger mon CV"
+            >
+              <Download size={16} />
+              Télécharger CV
+            </a>
+
+            <a
+              href={personal.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline"
+              aria-label="Voir mon GitHub"
+            >
+              <Github size={16} />
+              GitHub ↗
+            </a>
           </motion.div>
         </div>
-
-        <style>{`
-          @media (max-width: 1024px) {
-            .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-          }
-        `}</style>
 
         {/* Scroll indicator */}
         <motion.div

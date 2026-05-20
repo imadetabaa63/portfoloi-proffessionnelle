@@ -30,6 +30,7 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: #00d4aa22 transparent;
+  overflow-x: hidden;
 }
 
 html::-webkit-scrollbar {
@@ -68,14 +69,56 @@ body {
   .section-title {
     font-size: clamp(1.6rem, 8vw, 2.4rem);
   }
+
   .btn-primary, .btn-outline {
     padding: 10px 20px;
     font-size: 0.85rem;
     width: 100%;
     justify-content: center;
   }
+
   .glass-card {
     padding: 20px 16px;
+  }
+
+  /* Prevent iOS from auto-zooming into form inputs */
+  input, textarea, select {
+    font-size: 1rem !important;
+  }
+
+  /* Tighten badge sizing */
+  .badge {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+  }
+}
+
+/* ─── Extra-small screens (< 480px) ───────────────────────── */
+@media (max-width: 480px) {
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+
+  /* About stats: 2-col → 1-col on tiny screens */
+  .about-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Contact submit button full-width */
+  .contact-submit {
+    width: 100%;
+  }
+
+  /* Project card inner padding */
+  .project-card > div {
+    padding: 20px 16px !important;
+  }
+
+  /* Terminal font reduction */
+  .terminal-body {
+    padding: 14px;
+    font-size: 0.78rem;
   }
 }
 
@@ -237,6 +280,14 @@ body {
   flex-shrink: 0;
 }
 
+/* ─── Project card image overlay ──────────────────────────── */
+.card-img-overlay {
+  opacity: 0;
+}
+.project-card:hover .card-img-overlay {
+  opacity: 1 !important;
+}
+
 /* ─── Project card ─────────────────────────────────────────── */
 .project-card {
   position: relative;
@@ -362,6 +413,258 @@ body {
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 10px #00d4aa44; }
   50% { box-shadow: 0 0 30px #00d4aa88, 0 0 60px #00d4aa22; }
+}
+
+/* ─── Project Modal / Lightbox ────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(4, 6, 12, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-container {
+  background: #0d1420;
+  border: 1px solid #1e2d42;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 92vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: #1e2d42 transparent;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid #1e2d42;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #e2e8f0;
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+.modal-subtitle {
+  font-family: "Space Mono", monospace;
+  font-size: 0.78rem;
+  color: #8892a4;
+  margin: 0;
+}
+
+.modal-close {
+  background: #1a2332;
+  border: 1px solid #1e2d42;
+  border-radius: 8px;
+  color: #8892a4;
+  padding: 8px;
+  cursor: none;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.modal-close:hover {
+  color: #e2e8f0;
+  border-color: #2a3a52;
+  background: #202d3f;
+}
+
+.modal-image-area {
+  position: relative;
+  background: #080c14;
+  flex-shrink: 0;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(13, 20, 32, 0.88);
+  border: 1px solid #1e2d42;
+  border-radius: 8px;
+  color: #e2e8f0;
+  padding: 10px;
+  cursor: none;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.modal-nav:hover {
+  background: #1a2332;
+  border-color: #00d4aa44;
+}
+
+.modal-nav-prev { left: 12px; }
+.modal-nav-next { right: 12px; }
+
+.modal-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+  color: #8892a4;
+  background: rgba(8, 12, 20, 0.82);
+  padding: 3px 9px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.modal-caption {
+  margin: 0;
+  padding: 12px 28px;
+  font-family: "Space Mono", monospace;
+  font-size: 0.75rem;
+  color: #8892a4;
+  text-align: center;
+  border-bottom: 1px solid #1e2d4233;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+
+.modal-thumbnails {
+  display: flex;
+  gap: 8px;
+  padding: 14px 28px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1e2d4233;
+  scrollbar-width: thin;
+  scrollbar-color: #1e2d42 transparent;
+}
+
+.modal-thumb {
+  width: 76px;
+  height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid #1e2d42;
+  background: #080c14;
+  cursor: none;
+  padding: 0;
+  flex-shrink: 0;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.modal-thumb:hover {
+  transform: translateY(-2px);
+}
+
+.modal-thumb.active {
+  border-color: #00d4aa;
+}
+
+.modal-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.modal-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.modal-links {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Touch / coarse pointer: restore cursors inside modal */
+@media (pointer: coarse) {
+  .modal-close, .modal-nav, .modal-thumb {
+    cursor: pointer !important;
+  }
+}
+
+/* Modal responsive */
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: 8px;
+  }
+  .modal-container {
+    max-height: 96vh;
+    border-radius: 12px;
+  }
+  .modal-header {
+    padding: 16px 18px 14px;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+  }
+  .modal-image {
+    max-height: 260px;
+  }
+  .modal-nav {
+    padding: 7px;
+  }
+  .modal-nav-prev { left: 6px; }
+  .modal-nav-next { right: 6px; }
+  .modal-caption {
+    padding: 10px 16px;
+    font-size: 0.7rem;
+  }
+  .modal-thumbnails {
+    padding: 10px 16px;
+    gap: 6px;
+  }
+  .modal-thumb {
+    width: 58px;
+    height: 40px;
+  }
+  .modal-footer {
+    padding: 12px 16px;
+    gap: 12px;
+  }
 }
 
 /* ─── Noise texture overlay ────────────────────────────────── */

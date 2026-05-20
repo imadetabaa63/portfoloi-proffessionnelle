@@ -167,6 +167,7 @@ export default function About() {
 
           {/* ── Right: stat cards ── */}
           <div
+            className="about-stats-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
