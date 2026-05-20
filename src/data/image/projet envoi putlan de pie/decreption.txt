@@ -1,0 +1,38 @@
+💼 Projet : Automatisation de l’envoi des fiches de paie via WhatsApp
+📝 Description
+
+Ce projet consiste à automatiser le processus d’envoi mensuel des fiches de paie des employés via WhatsApp, en remplaçant une tâche manuelle répétitive par un workflow intelligent.
+
+La solution est basée sur n8n, permettant de détecter automatiquement les fichiers PDF déposés dans Google Drive, d’identifier les destinataires à partir de Google Sheets, puis d’envoyer les documents directement aux employés.
+
+⚙️ Fonctionnalités principales
+📂 Détection automatique des fiches de paie (PDF)
+🔍 Association employé ↔ numéro de téléphone
+📲 Envoi automatique des documents via WhatsApp
+🔄 Traitement en boucle de plusieurs fichiers
+📁 Archivage automatique des fichiers envoyés
+✅ Vérification des données avant envoi
+🎯 Objectifs
+Automatiser une tâche RH répétitive
+Réduire les erreurs humaines
+Gagner du temps dans le traitement mensuel
+Améliorer la communication interne
+Assurer la traçabilité des envois
+🛠️ Technologies utilisées
+n8n (automation workflow)
+Google Drive (stockage des fichiers)
+Google Sheets (base de données employés)
+WhatsApp API (envoi des messages)
+💡 Résultat
+
+Une solution simple, efficace et scalable qui permet au service RH d’envoyer des dizaines de fiches de paie en quelques minutes, sans intervention manuelle.
+
+🇲🇦 Version courte (option pour portfolio)
+
+Projet d’automatisation RH permettant l’envoi automatique des fiches de paie via WhatsApp à l’aide de n8n, avec gestion des fichiers sur Google Drive et des données employés sur Google Sheets.
+
+Si tu veux, je peux aussi te faire :
+
+🔥 une version CV (très courte)
+🚀 une description en anglais pour portfolio international
+💼 ou un pitch oral pour entretien
