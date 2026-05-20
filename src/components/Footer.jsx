@@ -57,6 +57,7 @@ export default function Footer() {
             flexWrap: 'wrap',
             gap: '24px',
           }}
+          className="footer-top"
         >
           {/* Logo */}
           <button
@@ -192,6 +193,13 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .footer-top { flex-direction: column; align-items: center; text-align: center; }
+          .footer-top nav ul { justify-content: center; }
+        }
+      `}</style>
     </footer>
   )
 }

@@ -55,6 +55,28 @@ body {
   body {
     cursor: auto;
   }
+  button, a, [role="button"] {
+    cursor: pointer !important;
+  }
+  .btn-primary, .btn-outline {
+    cursor: pointer;
+  }
+}
+
+/* ─── Mobile global tweaks ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .section-title {
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+  }
+  .btn-primary, .btn-outline {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .glass-card {
+    padding: 20px 16px;
+  }
 }
 
 /* ─── Custom Cursor ────────────────────────────────────────── */

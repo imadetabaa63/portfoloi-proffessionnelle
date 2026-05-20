@@ -132,6 +132,7 @@ export default function Hero() {
             gap: '60px',
             alignItems: 'center',
           }}
+          className="hero-grid"
         >
           {/* ── Left column ── */}
           <div>
@@ -282,6 +283,12 @@ export default function Hero() {
             <TerminalWindow />
           </motion.div>
         </div>
+
+        <style>{`
+          @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          }
+        `}</style>
 
         {/* Scroll indicator */}
         <motion.div
