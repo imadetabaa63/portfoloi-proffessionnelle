@@ -1,8 +1,50 @@
 import { useEffect, useState, useRef } from 'react'
-import { motion } from 'framer-motion'
-import { Download, Github, Eye, MapPin } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Download, Github, Eye, MapPin, CheckCircle } from 'lucide-react'
 import gsap from 'gsap'
 import { personal, hero } from '../data/portfolio'
+
+// ── Download toast ─────────────────────────────────────────────────────────────
+function DownloadToast({ visible }) {
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.95 }}
+          transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{
+            position: 'fixed',
+            bottom: '32px',
+            right: '24px',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            background: 'rgba(8, 12, 20, 0.95)',
+            border: '1px solid #00d4aa44',
+            borderRadius: '12px',
+            padding: '14px 20px',
+            backdropFilter: 'blur(16px)',
+            boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 0 30px #00d4aa18',
+            minWidth: '240px',
+          }}
+        >
+          <CheckCircle size={20} color="#00d4aa" />
+          <div>
+            <div style={{ fontFamily: '"Syne", sans-serif', fontWeight: 700, fontSize: '0.88rem', color: '#e2e8f0' }}>
+              Téléchargement réussi
+            </div>
+            <div style={{ fontFamily: '"Space Mono", monospace', fontSize: '0.65rem', color: '#8892a4', marginTop: '2px' }}>
+              CV_Imad_ET-TABBAA.pdf
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
 
 function useTypedText(words, typeSpeed = 85, deleteSpeed = 45, pause = 2200) {
   const [text, setText] = useState('')
@@ -142,7 +184,19 @@ function ScrollIndicator({ onClick }) {
 // ── Main Hero ──────────────────────────────────────────────────────────────────
 export default function Hero() {
   const typedText = useTypedText(hero.roles)
-  const scrollTo  = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  const [toastVisible, setToastVisible] = useState(false)
+  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+
+  const handleCVDownload = () => {
+    const link = document.createElement('a')
+    link.href = '/cv-imad.pdf'
+    link.download = 'CV_Imad_ET-TABBAA.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    setToastVisible(true)
+    setTimeout(() => setToastVisible(false), 3500)
+  }
 
   return (
     <section
@@ -255,9 +309,9 @@ export default function Hero() {
               <button onClick={() => scrollTo('projects')} className="btn-primary hero-btn" aria-label="Voir les projets">
                 <Eye size={15} /> Voir Projets
               </button>
-              <a href={personal.cv} download className="btn-outline hero-btn" aria-label="Télécharger mon CV">
+              <button onClick={handleCVDownload} className="btn-outline hero-btn" aria-label="Télécharger mon CV">
                 <Download size={15} /> CV
-              </a>
+              </button>
               <a href={personal.github} target="_blank" rel="noopener noreferrer" className="btn-outline hero-btn" aria-label="GitHub">
                 <Github size={15} /> GitHub
               </a>
@@ -306,6 +360,8 @@ export default function Hero() {
           <ScrollIndicator onClick={() => scrollTo('about')} />
         </div>
       </div>
+
+      <DownloadToast visible={toastVisible} />
 
       <style>{`
         .hero-available-badge {
